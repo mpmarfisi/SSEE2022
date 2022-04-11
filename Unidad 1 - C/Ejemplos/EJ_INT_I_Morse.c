@@ -8,19 +8,19 @@
 #define MORSE_ESPANOL       1
 
 // Array de strings o vector de punteros
-//							 Filas	        Columnas (en este caso largo máximo del string)
+//			     Filas	    Columnas (en este caso largo máximo del string)
 const char diccionario[CANTIDAD_CARACTERES][   10   ] = 
 {
-	".-",    "-...",  "-.-.",		 	// A - C
+	".-",    "-...",  "-.-.",		// A - C
 	"-..",   ".",     "..-.",  "--.", 	// D - G
 	"....",  "..",    ".---",  "-.-", 	// H - K
-	".-..",  "--",    "-.",    "--.--", // L - Ñ (Indice 14)
+	".-..",  "--",    "-.",    "--.--", 	// L - Ñ (Indice 14)
 	"---",   ".--.",  "--.-",  ".-.", 	// O - R
 	"...",   "-",     "..-",   "...-", 	// S - V
 	".--",   "-..-",  "-.--",  "--..", 	// W - Z
-	"-----", ".----", "..---", "...--", // 0 - 3
-	"....-", ".....", "-....", "--...", // 4 - 7
-	"---..", "----."                    // 8 - 9
+	"-----", ".----", "..---", "...--", 	// 0 - 3
+	"....-", ".....", "-....", "--...", 	// 4 - 7
+	"---..", "----."                    	// 8 - 9
 };
 /*
 Cada posicion del vector sera un puntero al inicio de cada string
@@ -48,7 +48,7 @@ unsigned char convertIndex(int index)
 }
 
 int main(void) {
-	unsigned char frase[100];
+    unsigned char frase[100];
     unsigned int modo = 0;
     unsigned char* limitador;
     unsigned int offset = 0;
@@ -89,7 +89,7 @@ int main(void) {
         en partes donde haya un espacio, y así poder ir comparando cada letra de morse individualmente. Retornará un 
         puntero a la posición donde encuentre el delimitador.
         */
-	    limitador = strtok(frase, " "); // Busco primera aparición del espacio
+	limitador = strtok(frase, " "); // Busco primera aparición del espacio
 
         for(int i = 0; i < CANTIDAD_CARACTERES; i++)
 	    {	
