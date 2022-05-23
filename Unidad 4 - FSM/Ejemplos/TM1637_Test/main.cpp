@@ -4,12 +4,13 @@
 // Vector de digitos que prende segmentos correspondientes para cada numero
 char digits[] = {63,6,91,79,102,109,125,7,127,111};
 
-// Tipo de dato del display donde almacena los 4 digitos a mostrar
+// El modulo con 4 displays y 7 segmentos se llama CATALEX
+// https://www.todomicro.com.ar/arduino/862-modulo-display-4-digitos-controlador-tm1637.html
 TM1637_CATALEX CATALEX(PTD2, PTD1);
 
 int main()
 {
-    // Limpio displays y seteo brillo
+    // Limpio displays y seteo brillo (TM1637_BRT0 minimo - TM1637_BRT7 maximo)
     CATALEX.cls(); 
     CATALEX.setBrightness(TM1637_BRT3);
 
