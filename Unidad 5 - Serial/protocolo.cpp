@@ -8,7 +8,7 @@
 // Comandos
 #define COMANDO_LEDS 'L'
 
-#define VERIFICACION
+#define VERIFICACION_RECEPCION
 
 enum{
     REPOSO = 0,
@@ -44,6 +44,7 @@ DigitalOut led_green(LED_GREEN);
 DigitalOut led_blue(LED_BLUE);
 
 void maquina_recepcion(void);
+void envio_trama(char comando, char * datos);
 void funcion_comandos(char comando, char * datos);
 
 int main() {
@@ -107,7 +108,7 @@ void maquina_recepcion(void)
                 indice--; // Por el ultimo aumento al igualar en el vector
                 // Evaluo si mi trama llego ok, hago la verificacion
                 // Utilizo un define para definir si controlo o no los datos
-                #ifdef VERIFICACION
+                #ifdef VERIFICACION_RECEPCION
                     verificacion = checksum_verif(datos, indice - 2);
                 #else
                     verificacion = datos[indice]; // No controlo verificacion
@@ -152,6 +153,31 @@ void funcion_comandos(char comando, char * datos)
     {
         case COMANDO_LEDS:
             funcion_leds(datos);
+			envio_trama('L',"LEDOK"); // Envio devolución de comando recibido
             break;
     }
+}
+// $ab...bc#
+void envio_trama(char comando, char * datos)
+{
+	char buffer[50];
+	char verificacion = 0;
+	char index = 0;
+	/*			  
+	sprintf nos "imprime" al buffer como si fuera un printf,
+	solo que en vez de imprimir a la pantalla, escribe el string
+	que le indiquemos. El valor que retorna será la cantidad de caracteres
+	que logro escribir.		   $ a Datos*/
+	index += sprintf(buffer, "%c%c%s", INICIO, 
+									   comando, 
+									   datos);
+	// Hago la verificacion para agregarla a la trama
+	verificacion = checksum_verif(buffer, strlen(buffer));
+	/* Sumo index para no pisar lo ya escrito sobre buffer y comenzar a
+	escribir después de la ultima posición escrita anteriormente */
+	sprintf(buffer + index, "%c%c", verificacion, 
+									FIN);
+	// Envio trama con la funcion putc y el largo del buffer formado
+	for(int i = 0; i < strlen(buffer); i++)
+		pc.putc(buffer[i]);
 }
