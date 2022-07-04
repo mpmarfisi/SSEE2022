@@ -58,7 +58,7 @@ char checksum_verif(char * data, int largo) // Paso el vector de datos
 {
     char chksum = 0;
     // Hago el XOR de cada uno de los bytes de la trama
-    for(int i = 0; i < largo; i++)
+    for(int i = 0; i <= largo; i++)
         chksum = chksum ^ data[i]; // XOR Byte a byte
     
     return chksum; // Devuelvo el byte de verificacion hecho localmente
@@ -107,9 +107,9 @@ void maquina_recepcion(void)
             {
                 indice--; // Por el ultimo aumento al igualar en el vector
                 // Evaluo si mi trama llego ok, hago la verificacion
-                // Utilizo un define para definir si controlo o no los datos
+                // Utilizo un define para evaluar si hago o no la verificacion
                 #ifdef VERIFICACION_RECEPCION
-                    verificacion = checksum_verif(datos, indice - 2);
+                    verificacion = checksum_verif(datos, indice);
                 #else
                     verificacion = datos[indice]; // No controlo verificacion
                 #endif
@@ -132,7 +132,6 @@ void maquina_recepcion(void)
             }
             // Recibo datos y aumento el indice
             datos[indice++] = caracter_recibido;
-            //indice++; // Igual a linea anterior
             break;
     }   
 }
