@@ -58,7 +58,7 @@ char checksum_verif(char * data, int largo) // Paso el vector de datos
 {
     char chksum = 0;
     // Hago el XOR de cada uno de los bytes de la trama
-    for(int i = 0; i <= largo; i++)
+    for(int i = 0; i < largo; i++)
         chksum = chksum ^ data[i]; // XOR Byte a byte
     
     return chksum; // Devuelvo el byte de verificacion hecho localmente
